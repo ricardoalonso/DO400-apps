@@ -15,7 +15,7 @@ describe("functional tests", () => {
       expect(res.stdout).toContain("Convert from one currency to another");
 
       // AND the command should exit normally
-      expect(res.stderr).toBeFalse();
+      expect(res.stderr).toBeFalsy();
     });
 
     it("should check for missing flags", async () => {
