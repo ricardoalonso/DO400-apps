@@ -37,7 +37,7 @@ pipeline {
 			def TAG_TO_DEPLOY = "BUILD-$BUILD_NUMBER"
 			if (params.DEPLOY_TAG != '' && params.DEPLOY_TAG != null) {
 			    def status = sh(
-				script: "./scripts/tag-exists-in-quay.sh $QUAY_USR/do400-recover ${params.DEPLOY_TAG}",
+				script: "./scripts/tag-exists-in-quay.sh $QUAY_USER/do400-recover ${params.DEPLOY_TAG}",
 				returnStatus: true
 			    )
 
