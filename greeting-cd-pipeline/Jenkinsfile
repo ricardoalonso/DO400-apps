@@ -13,5 +13,13 @@ pipeline {
         }
 
         // Add more stages here
+        stage('Deploy') {
+            steps {
+                sh '''
+                    oc start-build greeting-metrics \
+                    --follow --wait -n ricardoalonsos-metrics
+                '''
+            }
+        }
     }
 }
