@@ -1,10 +1,18 @@
 package com.redhat.shopping.integration.blackbox;
 
 import com.redhat.shopping.cart.AddToCartCommand;
+import com.redhat.shopping.catalog.CatalogStorage;
+import com.redhat.shopping.catalog.Product;
+import com.redhat.shopping.catalog.persistence.InMemoryCatalogStorage;
+
+import io.quarkus.test.junit.QuarkusMock;
 import io.quarkus.test.junit.QuarkusTest;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.Random;
 
@@ -29,6 +37,20 @@ public class ShoppingCartTest {
             .contentType("application/json")
             .body(productToAdd)
             .put("/cart");
+    }
+
+    @BeforeAll
+    public static void setup() {
+        CatalogStorage mockStorage = Mockito.mock(InMemoryCatalogStorage.class);
+
+        Mockito.when(mockStorage.containsKey(1)).thenReturn(true);
+        Mockito.when(mockStorage.containsKey(2)).thenReturn(true);
+        Mockito.when(mockStorage.containsKey(9999)).thenReturn(false);
+
+        Mockito.when(mockStorage.get(1)).thenReturn(new Product(1, 100));
+        Mockito.when(mockStorage.get(2)).thenReturn(new Product(2, 200));
+
+        QuarkusMock.installMockForType(mockStorage, CatalogStorage.class);
     }
 
     @BeforeEach
