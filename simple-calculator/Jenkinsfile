@@ -3,8 +3,8 @@ pipeline {
     options { skipDefaultCheckout true }
     stages {
         stage('Checkout') {
-            sendNotification('started', 'team@example.com')
             steps {
+                sendNotification('started', 'team@example.com')
                 git branch: 'notifications',
                     url: 'https://github.com/ricardoalonso/DO400-apps'
             }
